@@ -1,16 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { Moon, Sun } from "lucide-react";
 
 export function ThemeToggle() {
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
   function toggleTheme() {
-    const shell = document.querySelector<HTMLElement>(".site-shell");
-    if (!shell) return;
-    const next = shell.dataset.theme === "dark" ? "light" : "dark";
-    shell.dataset.theme = next;
-    const button = document.querySelector<HTMLButtonElement>(".theme-toggle");
-    button?.setAttribute("aria-label", `Switch to ${next === "dark" ? "light" : "dark"} theme`);
-    if (button) button.innerHTML = next === "dark" ? '<span aria-hidden="true">☼</span>' : '<span aria-hidden="true">☾</span>';
+    const next = theme === "dark" ? "light" : "dark";
+    document.querySelector<HTMLElement>(".site-shell")?.setAttribute("data-theme", next);
+    setTheme(next);
   }
-  return <button className="icon-button theme-toggle" onClick={toggleTheme} aria-label="Switch to light theme"><Sun size={17} aria-hidden="true" /></button>;
+  return <button className="icon-button theme-toggle" onClick={toggleTheme} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}>
+    {theme === "dark" ? <Sun size={17} aria-hidden="true" /> : <Moon size={17} aria-hidden="true" />}
+  </button>;
 }

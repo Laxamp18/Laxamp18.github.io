@@ -2,23 +2,16 @@ import {
   ArrowDownRight,
   ArrowUpRight,
   BookOpen,
-  Braces,
   Check,
-  ChevronRight,
   Code2,
-  Cpu,
   Github,
   Layers3,
-  Moon,
-  Sun,
-  Terminal,
 } from "lucide-react";
 import { ThemeToggle } from "../components/theme-toggle";
 import { KnowledgeMap } from "../components/knowledge-map";
 import {
   engineeringLog,
   foundations,
-  interests,
   milestones,
   profile,
   projects,
