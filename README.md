@@ -1,40 +1,44 @@
-# Laxam Poudel — Personal Portfolio
+# Laxam Poudel — Engineering Portfolio
 
-A responsive dark-theme portfolio built with Next.js App Router, React, TypeScript and Lucide icons.
+An evolving personal portfolio and engineering notebook built with Next.js, React and TypeScript.
 
-## Requirements
+## Run locally
 
 - Node.js 20.9+
 - npm
 
-## Run locally
-
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
 Open http://localhost:3000.
 
-## Build for production
+## Build
 
 ```bash
 npm run build
-npm start
 ```
 
-## Personalize before publishing
+The project uses Next.js static export for GitHub Pages. The generated site is written to `out/`.
 
-Search `app/page.tsx` for these placeholders and replace them:
+## Updating portfolio content
 
-- `your.email@example.com` — add your real email address.
-- GitHub and LinkedIn URLs — replace with your profile URLs.
-- `Institution to be added` — add your college/university.
-- Project descriptions and statuses — update to match what is actually completed.
-- Location — update if needed.
+Most content is maintained in `data/portfolio.ts`:
 
-The avatar is a CSS illustration, so no profile image file is required. Skill levels are approximate editable self-assessments. Update them to reflect your current abilities.
+- Profile introduction and story
+- Engineering Knowledge Map topics
+- Learning foundations and statuses
+- Confirmed timeline milestones
+- Project index
+- Engineering Log index
 
-## Deploy
+Only add projects when their status, technologies, contribution and links are accurate. AI-assisted experiments and independently developed projects should be labelled separately. Do not add estimated skill percentages or unverified achievements.
 
-# Push the project to GitHub, import the repository into Vercel, and deploy using the default Next.js settings.
+Engineering Log entries can be authored as Markdown/MDX and added to the log index when the publishing workflow is introduced.
+
+## Deployment
+
+The existing GitHub Actions workflow in `.github/workflows/deploy.yml` builds the static export and deploys it to GitHub Pages. The existing `CNAME` file is retained for the custom domain.
+
+The contact form is not yet connected to a private form endpoint. The site intentionally does not publish an email address or display a non-functional form.

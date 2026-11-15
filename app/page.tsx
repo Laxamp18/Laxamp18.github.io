@@ -1,178 +1,193 @@
+"use client";
+
+import { useState } from "react";
 import {
-  ArrowDown, ArrowRight, ArrowUpRight, Github, Linkedin, Mail,
-  Code2, Terminal, Globe2, GraduationCap, Layers3, Menu, Sparkles,
-  ExternalLink, MapPin, Cpu, Braces, Database, Smartphone
+  ArrowDownRight,
+  ArrowUpRight,
+  BookOpen,
+  Braces,
+  Check,
+  ChevronRight,
+  Code2,
+  Cpu,
+  Github,
+  Layers3,
+  Menu,
+  Moon,
+  Network,
+  Sun,
+  Terminal,
+  X,
 } from "lucide-react";
-
-const skills = [
-  { name: "C", level: "Intermediate", width: "76%" },
-  { name: "Python", level: "Fundamentals", width: "48%" },
-  { name: "JavaScript", level: "Learning", width: "42%" },
-  { name: "React / Next.js", level: "Learning", width: "30%" },
-  { name: "HTML & CSS", level: "Working knowledge", width: "62%" },
-];
-
-const projects = [
-  {
-    number: "01",
-    type: "WEB APPLICATION · IN PROGRESS",
-    title: "Campus Library Tracker",
-    description: "A student-focused library tool to keep track of borrowed books, issue dates, renewals and return deadlines.",
-    tags: ["React", "Next.js", "TypeScript", "Database"],
-    status: "In development",
-  },
-  {
-    number: "02",
-    type: "WEB TOOL · EXPERIMENT",
-    title: "GPA Calculator",
-    description: "A small web-based calculator concept for entering subject grades and estimating a weighted GPA.",
-    tags: ["HTML", "CSS", "JavaScript"],
-    status: "Learning project",
-  },
-  {
-    number: "03",
-    type: "PROGRAMMING · PRACTICE",
-    title: "C Programming Exercises",
-    description: "A collection of problem-solving exercises focused on pointers, structures, recursion, sorting and algorithms.",
-    tags: ["C", "Algorithms", "Problem Solving"],
-    status: "Ongoing practice",
-  },
-];
-
-const journey = [
-  { date: "CURRENT", title: "Computer Engineering", place: "Undergraduate studies", detail: "Building a strong foundation in computing, digital systems and software development." },
-  { date: "ONGOING", title: "Web Development", place: "Self-directed learning", detail: "Learning JavaScript and developing skills with React and Next.js through practical projects." },
-  { date: "FOUNDATION", title: "Programming Fundamentals", place: "C and Python", detail: "Practising core programming concepts, logical thinking and structured problem solving." },
-];
-
-function SectionHeading({ eyebrow, title, detail }: { eyebrow: string; title: string; detail: string }) {
-  return (
-    <div className="section-heading">
-      <span className="eyebrow">{eyebrow}</span>
-      <h2>{title}</h2>
-      <p>{detail}</p>
-    </div>
-  );
-}
+import {
+  engineeringLog,
+  foundations,
+  interests,
+  milestones,
+  profile,
+  projects,
+} from "../data/portfolio";
 
 export default function Home() {
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [activeTopic, setActiveTopic] = useState(interests[0].id);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const selectedTopic = interests.find((topic) => topic.id === activeTopic) ?? interests[0];
+
   return (
-    <main>
-      <header className="topbar">
-        <a className="brand" href="#home"><span className="brand-mark">LP</span><span>LAXAM<span className="muted">.DEV</span></span></a>
-        <nav className="nav-links">
-          <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#journey">Journey</a>
+    <main className="site-shell" data-theme={theme}>
+      <header className="site-header">
+        <a className="wordmark" href="#top" aria-label="Laxam Poudel home">
+          <span className="wordmark-symbol">LP<span>↗</span></span>
+          <span className="wordmark-name">LAXAM POUDEL</span>
+        </a>
+        <nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Main navigation">
+          <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+          <a href="#map" onClick={() => setMenuOpen(false)}>Knowledge map</a>
+          <a href="#work" onClick={() => setMenuOpen(false)}>Work</a>
+          <a href="#log" onClick={() => setMenuOpen(false)}>Field notes</a>
         </nav>
-        <a className="nav-cta" href="#contact">Let&apos;s talk <ArrowUpRight size={15}/></a>
+        <div className="header-actions">
+          <button className="icon-button theme-toggle" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label={"Switch to " + (theme === "dark" ? "light" : "dark") + " theme"}>
+            {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
+          </button>
+          <a className="header-contact" href="#contact">Get in touch <ArrowUpRight size={14} /></a>
+          <button className="icon-button menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">
+            {menuOpen ? <X size={19} /> : <Menu size={19} />}
+          </button>
+        </div>
       </header>
 
-      <section className="hero section-wrap" id="home">
+      <section className="hero" id="top">
         <div className="hero-copy">
-          <div className="availability"><span className="pulse"/> OPEN TO LEARNING & COLLABORATION</div>
-          <p className="hero-kicker">HELLO, WORLD. I&apos;M</p>
-          <h1>Laxam<br/><span className="gradient-text">Poudel.</span></h1>
-          <h2>Computer Engineering Student <span className="slash">/</span> Aspiring Developer</h2>
-          <p className="hero-description">I enjoy turning ideas into useful digital experiences. Currently strengthening my programming fundamentals and exploring modern web development.</p>
-          <div className="hero-actions">
-            <a className="button button-primary" href="#projects">Explore my work <ArrowRight size={17}/></a>
-            <a className="button button-ghost" href="#about">More about me <ArrowDown size={16}/></a>
+          <div className="hero-overline"><span className="status-dot" /> A PERSONAL ENGINEERING NOTEBOOK <span className="overline-index">NO. 001 / 2026</span></div>
+          <p className="hero-pretitle">HELLO, I'M</p>
+          <h1>Laxam<br /><em>Poudel.</em></h1>
+          <div className="hero-bottomline">
+            <p>{profile.introduction}</p>
+            <a href="#about" className="round-link" aria-label="Scroll to introduction"><ArrowDownRight size={22} /></a>
           </div>
-          <div className="hero-socials">
-            <a href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub profile"><Github size={18}/></a>
-            <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile"><Linkedin size={18}/></a>
-            <a href="mailto:your.email@example.com" aria-label="Email"><Mail size={18}/></a>
-            <span className="social-note">Find me online <ArrowUpRight size={13}/></span>
+          <div className="hero-meta">
+            <span><span className="meta-label">BASED IN</span>{profile.location}</span>
+            <span><span className="meta-label">CURRENTLY</span>CSIT undergraduate</span>
+            <span><span className="meta-label">INTERESTED IN</span>Systems · AI · Software</span>
           </div>
         </div>
+        <div className="hero-visual" aria-label="Abstract network diagram representing connected areas of computing">
+          <div className="visual-topline"><span>FIG. 01</span><span>THINK IN SYSTEMS</span></div>
+          <div className="system-orbit orbit-a" />
+          <div className="system-orbit orbit-b" />
+          <div className="system-orbit orbit-c" />
+          <div className="visual-core"><Cpu size={34} strokeWidth={1.1} /><span>COMPUTING</span></div>
+          <span className="orbit-label label-a">LOGIC</span>
+          <span className="orbit-label label-b">DATA</span>
+          <span className="orbit-label label-c">SYSTEMS</span>
+          <span className="visual-coordinate">27° 40' N / 84° 26' E</span>
+          <div className="visual-caption">A map of questions,<br />not a list of answers.</div>
+        </div>
+        <div className="hero-foot"><span>SCROLL TO EXPLORE</span><span>01 — 06</span></div>
+      </section>
 
-        <div className="hero-art" aria-label="Abstract profile avatar illustration">
-          <div className="orbit orbit-one"/><div className="orbit orbit-two"/>
-          <div className="art-glow"/>
-          <div className="avatar-card">
-            <div className="avatar-top"><span>PROFILE_001</span><span className="live-dot"/></div>
-            <div className="avatar">
-              <div className="avatar-halo"/>
-              <div className="avatar-head"><div className="hair"/><div className="face"><i/><i/><b/></div></div>
-              <div className="avatar-neck"/>
-              <div className="avatar-body"><span>LP</span></div>
+      <section className="intro-section section-grid" id="about">
+        <div className="section-aside"><span className="section-number">01 / ABOUT</span><span className="aside-rule" /><span className="aside-note">A work in progress,<br />by design.</span></div>
+        <div className="intro-content">
+          <p className="section-kicker">A LITTLE CONTEXT</p>
+          <h2>Curiosity is a<br /><em>useful starting point.</em></h2>
+          <div className="intro-columns">
+            <p className="intro-lead">{profile.story}</p>
+            <div className="intro-detail">
+              <p>I'm currently studying CSIT at Birendra Multiple Campus in Bharatpur, Chitwan. My interests span software, computer systems, algorithms, AI and the questions that connect them.</p>
+              <p>This site is a record of the process: what I'm learning, what I'm testing, what I don't understand yet and what I build along the way.</p>
+              <div className="education-line"><span className="education-icon"><Layers3 size={17} /></span><span><b>Birendra Multiple Campus</b><small>CSIT undergraduate · First year</small></span><span className="education-location">BHARATPUR, NEPAL</span></div>
             </div>
-            <div className="avatar-bottom"><span>BUILDING THE FUTURE</span><span>✳ 2026</span></div>
-          </div>
-          <div className="float-chip chip-code"><Code2 size={16}/> <span>Code</span></div>
-          <div className="float-chip chip-build"><Sparkles size={16}/> <span>Create</span></div>
-          <div className="hero-index">01 <span>/ 04</span></div>
-        </div>
-        <div className="scroll-cue"><span/> SCROLL TO EXPLORE</div>
-      </section>
-
-      <section className="about section-wrap section-block" id="about">
-        <SectionHeading eyebrow="A LITTLE INTRODUCTION" title="Curious by nature." detail="Learning how things work, then building something with what I learn."/>
-        <div className="about-grid">
-          <div className="about-main">
-            <span className="big-quote">“</span>
-            <p className="about-statement">I&apos;m a <em>Computer Engineering student</em> with a growing interest in software development, problem solving and the web.</p>
-            <p className="body-copy">My current focus is strengthening the fundamentals: writing better code, understanding how systems work and building practical projects. I like learning by experimenting, breaking problems into smaller pieces and improving through practice.</p>
-          </div>
-          <div className="info-stack">
-            <div className="info-card"><span className="info-icon"><GraduationCap/></span><div><small>EDUCATION</small><strong>Computer Engineering</strong><p>Undergraduate · Institution to be added</p></div></div>
-            <div className="info-card"><span className="info-icon"><Terminal/></span><div><small>MAIN INTEREST</small><strong>Software & Web Development</strong><p>Programming · Frontend · Problem solving</p></div></div>
-            <div className="info-card"><span className="info-icon"><MapPin/></span><div><small>LOCATION</small><strong>Chitwan, Nepal</strong><p>Edit this if your location has changed</p></div></div>
           </div>
         </div>
       </section>
 
-      <section className="skills section-wrap section-block" id="skills">
-        <SectionHeading eyebrow="MY TOOLKIT" title="Skills in progress." detail="A snapshot of the tools and technologies I am currently learning and using."/>
-        <div className="skills-layout">
-          <div className="skill-bars">
-            {skills.map((skill) => <div className="skill-row" key={skill.name}><div className="skill-meta"><strong>{skill.name}</strong><span>{skill.level}</span></div><div className="track"><span style={{ width: skill.width }}/></div></div>)}
-            <p className="skill-note">Skill indicators are approximate self-assessments, not formal test scores.</p>
+      <section className="map-section section-grid" id="map">
+        <div className="section-aside"><span className="section-number">02 / KNOWLEDGE MAP</span><span className="aside-rule" /><span className="aside-note">Areas of interest,<br />connected by ideas.</span></div>
+        <div className="section-main">
+          <div className="section-heading-row">
+            <div><p className="section-kicker">THE ENGINEERING KNOWLEDGE MAP</p><h2>Follow the <em>connections.</em></h2></div>
+            <span className="map-count">05 AREAS / OPEN ENDED</span>
           </div>
-          <div className="tech-grid">
-            <div className="tech-tile"><Braces/><span>JavaScript</span></div>
-            <div className="tech-tile"><Code2/><span>C</span></div>
-            <div className="tech-tile"><Terminal/><span>Python</span></div>
-            <div className="tech-tile"><Globe2/><span>React / Next.js</span></div>
-            <div className="tech-tile"><Layers3/><span>HTML & CSS</span></div>
-            <div className="tech-tile"><Database/><span>SQL basics</span></div>
+          <p className="section-description">A living map of topics I'm exploring. Select a node to see the questions and concepts currently on my radar. These are learning areas, not claims of expertise.</p>
+          <div className="knowledge-layout">
+            <div className="map-canvas">
+              <svg className="map-lines" viewBox="0 0 700 410" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M120 95 L345 55 L570 115 M120 95 L190 315 L500 325 L570 115 M345 55 L500 325" />
+                <circle cx="345" cy="55" r="3" /><circle cx="190" cy="315" r="3" /><circle cx="500" cy="325" r="3" />
+              </svg>
+              {interests.map((topic, index) => (
+                <button key={topic.id} className={"map-node node-" + topic.id + (activeTopic === topic.id ? " is-active" : "")} onClick={() => setActiveTopic(topic.id)} aria-pressed={activeTopic === topic.id}>
+                  <span className="node-index">0{index + 1}</span><span className="node-name">{topic.short}</span><span className="node-state">{topic.status}</span>
+                </button>
+              ))}
+              <div className="map-center"><Network size={18} /><span>COMPUTING</span></div>
+              <span className="map-axis axis-x">CONCEPTS →</span><span className="map-axis axis-y">EXPLORATION ↑</span>
+            </div>
+            <article className="topic-detail" aria-live="polite">
+              <div className="detail-top"><span>SELECTED NODE / {selectedTopic.id.toUpperCase()}</span><span className="detail-pulse" /></div>
+              <p className="detail-label">AREA OF INTEREST</p>
+              <h3>{selectedTopic.name}</h3>
+              <span className="topic-status">{selectedTopic.status}</span>
+              <p className="topic-description">{selectedTopic.description}</p>
+              <div className="concept-list"><span className="detail-label">CONNECTED CONCEPTS</span>{selectedTopic.concepts.map((concept) => <span className="concept-chip" key={concept}>{concept}</span>)}</div>
+              <div className="detail-foot"><span>STATUS IS EDITABLE</span><ChevronRight size={15} /></div>
+            </article>
           </div>
         </div>
       </section>
 
-      <section className="projects section-wrap section-block" id="projects">
-        <SectionHeading eyebrow="SELECTED WORK" title="Ideas into projects." detail="A few projects and learning experiments. More will be added as I build."/>
-        <div className="project-list">
-          {projects.map((project) => <article className="project-card" key={project.number}>
-            <div className="project-number">{project.number}</div>
-            <div className="project-content"><div className="project-type">{project.type}</div><h3>{project.title}</h3><p>{project.description}</p><div className="tags">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div></div>
-            <div className="project-end"><span className="project-status"><i/> {project.status}</span><span className="project-arrow"><ArrowUpRight/></span></div>
-          </article>)}
+      <section className="foundation-section section-grid" id="foundation">
+        <div className="section-aside"><span className="section-number">03 / FOUNDATIONS</span><span className="aside-rule" /><span className="aside-note">No scores.<br />Just honest labels.</span></div>
+        <div className="section-main">
+          <p className="section-kicker">CURRENT LEARNING SNAPSHOT</p>
+          <div className="section-heading-row"><h2>Building the <em>foundations.</em></h2><span className="map-count">UPDATED AS I LEARN</span></div>
+          <p className="section-description">A plain-language view of what I'm studying. No percentage bars or inflated proficiency claims.</p>
+          <div className="foundation-list">
+            {foundations.map((item, index) => <div className="foundation-row" key={item.name}><span className="foundation-index">0{index + 1}</span><span className="foundation-name">{item.name}</span><span className="foundation-note">{item.note}</span><span className="foundation-status">{item.status}</span><Check className="foundation-check" size={15} /></div>)}
+          </div>
         </div>
       </section>
 
-      <section className="journey section-wrap section-block" id="journey">
-        <SectionHeading eyebrow="THE ROAD SO FAR" title="Always learning." detail="An evolving journey — update these milestones as your education and experience grow."/>
-        <div className="timeline">
-          {journey.map((item, index) => <div className="timeline-item" key={item.title}><div className="timeline-marker">{String(index + 1).padStart(2, "0")}</div><div className="timeline-date">{item.date}</div><div className="timeline-content"><h3>{item.title}</h3><span>{item.place}</span><p>{item.detail}</p></div></div>)}
+      <section className="work-section section-grid" id="work">
+        <div className="section-aside"><span className="section-number">04 / SELECTED WORK</span><span className="aside-rule" /><span className="aside-note">Experiments first.<br />Evidence always.</span></div>
+        <div className="section-main">
+          <p className="section-kicker">PROJECTS & EXPERIMENTS</p>
+          <div className="section-heading-row"><h2>Work in <em>progress.</em></h2><span className="map-count">A GROWING INDEX</span></div>
+          <p className="section-description">Projects will be documented with their actual scope, my contribution, technologies and the role AI played. AI-assisted experiments and independently developed projects will be labelled separately.</p>
+          {projects.length > 0 ? (
+            <div className="project-grid">{projects.map((project) => <article className="project-card" key={project.title}><div className="project-card-top"><span>{project.category}</span><span>{project.status}</span></div><h3>{project.title}</h3><p>{project.summary}</p><p className="project-contribution">{project.contribution}</p><div className="project-tags">{project.technologies.map((technology) => <span key={technology}>{technology}</span>)}</div><div className="project-links">{project.github ? <a href={project.github} target="_blank" rel="noreferrer">Source <ArrowUpRight size={14} /></a> : null}{project.demo ? <a href={project.demo} target="_blank" rel="noreferrer">Live demo <ArrowUpRight size={14} /></a> : null}</div></article>)}</div>
+          ) : (
+            <div className="empty-state"><span className="empty-icon"><Code2 size={20} /></span><div><span className="empty-label">PROJECT INDEX / READY FOR ENTRIES</span><h3>Nothing published here yet.</h3><p>I'm keeping this space open until each project has a clear description and an honest account of how it was made. The project list is maintained in <code>data/portfolio.ts</code>.</p></div><span className="empty-mark">— 00</span></div>
+          )}
         </div>
       </section>
 
-      <section className="contact section-wrap" id="contact">
-        <div className="contact-panel">
-          <div className="contact-orb"/>
-          <span className="eyebrow">HAVE A PROJECT OR AN IDEA?</span>
-          <h2>Let&apos;s build<br/><span className="gradient-text">something useful.</span></h2>
-          <p>I&apos;m interested in learning, exchanging ideas and collaborating on meaningful projects.</p>
-          <a className="button button-primary" href="mailto:your.email@example.com">Get in touch <ArrowUpRight size={17}/></a>
-          <div className="contact-decoration"><Cpu/><span>IDEAS → CODE → IMPACT</span></div>
+      <section className="timeline-section section-grid" id="timeline">
+        <div className="section-aside"><span className="section-number">05 / TIMELINE</span><span className="aside-rule" /><span className="aside-note">The path so far,<br />still unfolding.</span></div>
+        <div className="section-main">
+          <p className="section-kicker">ENGINEERING TIMELINE</p><div className="section-heading-row"><h2>Small steps. <em>New questions.</em></h2><span className="map-count">CONFIRMED MILESTONES</span></div>
+          <div className="milestone-list">{milestones.map((milestone, index) => <article className="milestone" key={milestone.title}><span className="milestone-index">0{index + 1}</span><span className="milestone-dot" /><div><h3>{milestone.title}</h3><p>{milestone.detail}</p></div><span className="milestone-tag">LEARNING</span></article>)}</div>
         </div>
       </section>
 
-      <footer className="footer section-wrap">
-        <a className="brand" href="#home"><span className="brand-mark">LP</span><span>LAXAM<span className="muted">.DEV</span></span></a>
-        <p>Designed & built with curiosity. © 2026 Laxam Poudel.</p>
-        <a href="#home" className="back-top">BACK TO TOP ↑</a>
-      </footer>
+      <section className="log-section section-grid" id="log">
+        <div className="section-aside"><span className="section-number">06 / FIELD NOTES</span><span className="aside-rule" /><span className="aside-note">Notes from the<br />learning process.</span></div>
+        <div className="section-main">
+          <p className="section-kicker">THE ENGINEERING LOG</p><div className="section-heading-row"><h2>Think. Test. <em>Document.</em></h2><span className="map-count">NOTEBOOK / 000</span></div>
+          <p className="section-description">A hybrid of research notebook, developer journal and experimental lab. Notes can include concepts I'm learning, debugging stories, experiments, questions and research summaries.</p>
+          {engineeringLog.length ? <div className="log-grid">{engineeringLog.map((entry) => <a className="log-card" href={entry.href} key={entry.title}><span>{entry.category} · {entry.date}</span><h3>{entry.title}</h3><p>{entry.summary}</p><ArrowUpRight size={17} /></a>)}</div> : <div className="log-empty"><BookOpen size={19} /><span>No public notes yet.</span><p>When a note is ready, it can be added as a Markdown entry and published from the repository.</p></div>}
+        </div>
+      </section>
+
+      <section className="contact-section" id="contact">
+        <div className="contact-inner"><p className="section-kicker">OPEN TO GOOD QUESTIONS</p><h2>Have an idea?<br /><em>Let's explore it.</em></h2><p>I'm interested in thoughtful conversations, learning together and small experiments that lead somewhere interesting.</p><a className="contact-link" href={profile.github} target="_blank" rel="noreferrer">Find me on GitHub <Github size={17} /><ArrowUpRight size={15} /></a><span className="contact-note">A private contact form will be connected before launch.</span></div>
+        <div className="contact-side"><Terminal size={24} /><span>STATUS: LEARNING</span><span>LOCATION: CHITWAN, NP</span><span>BUILD: IN PUBLIC</span></div>
+      </section>
+
+      <footer className="site-footer"><a className="wordmark" href="#top"><span className="wordmark-symbol">LP<span>↗</span></span><span className="wordmark-name">LAXAM POUDEL</span></a><span>AN EVOLVING BODY OF WORK · 2026</span><a href="#top">BACK TO TOP ↑</a></footer>
     </main>
   );
 }
