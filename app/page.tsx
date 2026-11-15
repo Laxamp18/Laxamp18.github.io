@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import {
   ArrowDownRight,
   ArrowUpRight,
@@ -12,13 +9,12 @@ import {
   Cpu,
   Github,
   Layers3,
-  Menu,
   Moon,
-  Network,
   Sun,
   Terminal,
-  X,
 } from "lucide-react";
+import { ThemeToggle } from "../components/theme-toggle";
+import { KnowledgeMap } from "../components/knowledge-map";
 import {
   engineeringLog,
   foundations,
@@ -29,39 +25,35 @@ import {
 } from "../data/portfolio";
 
 export default function Home() {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
-  const [activeTopic, setActiveTopic] = useState(interests[0].id);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const selectedTopic = interests.find((topic) => topic.id === activeTopic) ?? interests[0];
-
   return (
-    <main className="site-shell" data-theme={theme}>
+    <main className="site-shell" data-theme="dark">
       <a className="skip-link" href="#about">Skip to content</a>
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="Laxam Poudel home">
           <span className="wordmark-symbol">LP<span>↗</span></span>
           <span className="wordmark-name">LAXAM POUDEL</span>
         </a>
-        <nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Main navigation">
-          <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
-          <a href="#map" onClick={() => setMenuOpen(false)}>Knowledge map</a>
-          <a href="#work" onClick={() => setMenuOpen(false)}>Work</a>
-          <a href="#log" onClick={() => setMenuOpen(false)}>Field notes</a>
+        <nav className="main-nav" aria-label="Main navigation">
+          <a href="#about">About</a>
+          <a href="#map">Knowledge map</a>
+          <a href="#work">Work</a>
+          <a href="#log">Field notes</a>
         </nav>
         <div className="header-actions">
-          <button className="icon-button theme-toggle" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label={"Switch to " + (theme === "dark" ? "light" : "dark") + " theme"}>
-            {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
-          </button>
+          <ThemeToggle />
           <a className="header-contact" href="#contact">Get in touch <ArrowUpRight size={14} /></a>
-          <button className="icon-button menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">
-            {menuOpen ? <X size={19} /> : <Menu size={19} />}
-          </button>
+          <details className="nav-disclosure">
+            <summary className="icon-button menu-toggle" aria-label="Open navigation"><span aria-hidden="true">☰</span></summary>
+            <nav className="mobile-nav" aria-label="Mobile navigation">
+              <a href="#about">About</a><a href="#map">Knowledge map</a><a href="#work">Work</a><a href="#log">Field notes</a><a href="#contact">Contact</a>
+            </nav>
+          </details>
         </div>
       </header>
 
       <section className="hero" id="top">
         <div className="hero-copy">
-          <div className="hero-overline"><span className="status-dot" /> A PERSONAL ENGINEERING NOTEBOOK <span className="overline-index">NO. 001 / 2026</span></div>
+          <div className="hero-overline">COMPUTER SCIENCE STUDENT <span className="overline-index">CHITWAN, NEPAL</span></div>
           <p className="hero-pretitle">HELLO, I'M</p>
           <h1>Laxam<br /><em>Poudel.</em></h1>
           <div className="hero-bottomline">
@@ -74,19 +66,18 @@ export default function Home() {
             <span><span className="meta-label">INTERESTED IN</span>Systems · AI · Software</span>
           </div>
         </div>
-        <div className="hero-visual" aria-label="Abstract network diagram representing connected areas of computing">
-          <div className="visual-topline"><span>FIG. 01</span><span>THINK IN SYSTEMS</span></div>
-          <div className="system-orbit orbit-a" />
-          <div className="system-orbit orbit-b" />
-          <div className="system-orbit orbit-c" />
-          <div className="visual-core"><Cpu size={34} strokeWidth={1.1} /><span>COMPUTING</span></div>
-          <span className="orbit-label label-a">LOGIC</span>
-          <span className="orbit-label label-b">DATA</span>
-          <span className="orbit-label label-c">SYSTEMS</span>
-          <span className="visual-coordinate">27° 40' N / 84° 26' E</span>
-          <div className="visual-caption">A map of questions,<br />not a list of answers.</div>
-        </div>
-        <div className="hero-foot"><span>SCROLL TO EXPLORE</span><span>01 — 06</span></div>
+        <aside className="focus-panel" aria-label="Current areas of interest">
+          <p className="focus-heading">CURRENT AREAS OF INTEREST</p>
+          <ul className="focus-list">
+            <li><span>01</span> Computer systems</li>
+            <li><span>02</span> Algorithms & data structures</li>
+            <li><span>03</span> AI & machine learning</li>
+            <li><span>04</span> Web development</li>
+            <li><span>05</span> Research & experiments</li>
+          </ul>
+          <p className="focus-caption">A snapshot of what I'm learning now. It will change as I do.</p>
+        </aside>
+        <div className="hero-foot"><span>SCROLL TO EXPLORE</span><span>PORTFOLIO</span></div>
       </section>
 
       <section className="intro-section section-grid" id="about">
@@ -105,40 +96,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="map-section section-grid" id="map">
-        <div className="section-aside"><span className="section-number">02 / KNOWLEDGE MAP</span><span className="aside-rule" /><span className="aside-note">Areas of interest,<br />connected by ideas.</span></div>
-        <div className="section-main">
-          <div className="section-heading-row">
-            <div><p className="section-kicker">THE ENGINEERING KNOWLEDGE MAP</p><h2>Follow the <em>connections.</em></h2></div>
-            <span className="map-count">05 AREAS / OPEN ENDED</span>
-          </div>
-          <p className="section-description">A living map of topics I'm exploring. Select a node to see the questions and concepts currently on my radar. These are learning areas, not claims of expertise.</p>
-          <div className="knowledge-layout">
-            <div className="map-canvas">
-              <svg className="map-lines" viewBox="0 0 700 410" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M120 95 L345 55 L570 115 M120 95 L190 315 L500 325 L570 115 M345 55 L500 325" />
-                <circle cx="345" cy="55" r="3" /><circle cx="190" cy="315" r="3" /><circle cx="500" cy="325" r="3" />
-              </svg>
-              {interests.map((topic, index) => (
-                <button key={topic.id} className={"map-node node-" + topic.id + (activeTopic === topic.id ? " is-active" : "")} onClick={() => setActiveTopic(topic.id)} aria-pressed={activeTopic === topic.id}>
-                  <span className="node-index">0{index + 1}</span><span className="node-name">{topic.short}</span><span className="node-state">{topic.status}</span>
-                </button>
-              ))}
-              <div className="map-center"><Network size={18} /><span>COMPUTING</span></div>
-              <span className="map-axis axis-x">CONCEPTS →</span><span className="map-axis axis-y">EXPLORATION ↑</span>
-            </div>
-            <article className="topic-detail" aria-live="polite">
-              <div className="detail-top"><span>SELECTED NODE / {selectedTopic.id.toUpperCase()}</span><span className="detail-pulse" /></div>
-              <p className="detail-label">AREA OF INTEREST</p>
-              <h3>{selectedTopic.name}</h3>
-              <span className="topic-status">{selectedTopic.status}</span>
-              <p className="topic-description">{selectedTopic.description}</p>
-              <div className="concept-list"><span className="detail-label">CONNECTED CONCEPTS</span>{selectedTopic.concepts.map((concept) => <span className="concept-chip" key={concept}>{concept}</span>)}</div>
-              <div className="detail-foot"><span>STATUS IS EDITABLE</span><ChevronRight size={15} /></div>
-            </article>
-          </div>
-        </div>
-      </section>
+      <KnowledgeMap />
 
       <section className="foundation-section section-grid" id="foundation">
         <div className="section-aside"><span className="section-number">03 / FOUNDATIONS</span><span className="aside-rule" /><span className="aside-note">No scores.<br />Just honest labels.</span></div>
@@ -184,11 +142,11 @@ export default function Home() {
       </section>
 
       <section className="contact-section" id="contact">
-        <div className="contact-inner"><p className="section-kicker">OPEN TO GOOD QUESTIONS</p><h2>Have an idea?<br /><em>Let's explore it.</em></h2><p>I'm interested in thoughtful conversations, learning together and small experiments that lead somewhere interesting.</p><a className="contact-link" href={profile.github} target="_blank" rel="noreferrer">Find me on GitHub <Github size={17} /><ArrowUpRight size={15} /></a><span className="contact-note">For now, GitHub is the public contact point.</span></div>
-        <div className="contact-side"><Terminal size={24} /><span>STATUS: LEARNING</span><span>LOCATION: CHITWAN, NP</span><span>BUILD: IN PUBLIC</span></div>
+        <div className="contact-inner"><p className="section-kicker">CONTACT</p><h2>Have an idea?<br /><em>Let's explore it.</em></h2><p>I'm interested in thoughtful conversations, learning together and small experiments that lead somewhere interesting.</p><a className="contact-link" href={profile.github} target="_blank" rel="noreferrer">Find me on GitHub <Github size={17} /><ArrowUpRight size={15} /></a><span className="contact-note">For now, GitHub is the public contact point.</span></div>
+        
       </section>
 
-      <footer className="site-footer"><a className="wordmark" href="#top"><span className="wordmark-symbol">LP<span>↗</span></span><span className="wordmark-name">LAXAM POUDEL</span></a><span>AN EVOLVING BODY OF WORK · 2026</span><a href="#top">BACK TO TOP ↑</a></footer>
+      <footer className="site-footer"><a className="wordmark" href="#top"><span className="wordmark-symbol">LP<span>↗</span></span><span className="wordmark-name">LAXAM POUDEL</span></a><span>PERSONAL PORTFOLIO</span><a href="#top">BACK TO TOP ↑</a></footer>
     </main>
   );
 }
