@@ -36,6 +36,7 @@ export default function Home() {
 
   return (
     <main className="site-shell" data-theme={theme}>
+      <a className="skip-link" href="#about">Skip to content</a>
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="Laxam Poudel home">
           <span className="wordmark-symbol">LP<span>↗</span></span>
@@ -183,7 +184,7 @@ export default function Home() {
       </section>
 
       <section className="contact-section" id="contact">
-        <div className="contact-inner"><p className="section-kicker">OPEN TO GOOD QUESTIONS</p><h2>Have an idea?<br /><em>Let's explore it.</em></h2><p>I'm interested in thoughtful conversations, learning together and small experiments that lead somewhere interesting.</p><a className="contact-link" href={profile.github} target="_blank" rel="noreferrer">Find me on GitHub <Github size={17} /><ArrowUpRight size={15} /></a><span className="contact-note">A private contact form will be connected before launch.</span></div>
+        <div className="contact-inner"><p className="section-kicker">OPEN TO GOOD QUESTIONS</p><h2>Have an idea?<br /><em>Let's explore it.</em></h2><p>I'm interested in thoughtful conversations, learning together and small experiments that lead somewhere interesting.</p><a className="contact-link" href={profile.github} target="_blank" rel="noreferrer">Find me on GitHub <Github size={17} /><ArrowUpRight size={15} /></a><span className="contact-note">For now, GitHub is the public contact point.</span></div>
         <div className="contact-side"><Terminal size={24} /><span>STATUS: LEARNING</span><span>LOCATION: CHITWAN, NP</span><span>BUILD: IN PUBLIC</span></div>
       </section>
 
